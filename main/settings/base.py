@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    
+    'rest_framework.authtoken',
     # Third party apps: 
     'drf_yasg',
+    'dj_rest_auth',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -145,4 +147,11 @@ LOGGING = {
             # will not be handled by the django logger. 
         }, 
     }, 
+}
+
+
+#My Installed;
+REST_FRAMEWORK = {
+    # Allow post-request without CSRF, so can connection with Token from external service, like Postman:
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication']
 }
