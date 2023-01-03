@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     # Third party apps: 
     'drf_yasg',
     'dj_rest_auth',
+    #my_apps ;
     'users',
+    'flight',
 ]
 
 MIDDLEWARE = [
