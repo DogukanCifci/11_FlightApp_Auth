@@ -1,6 +1,6 @@
 from .base import * 
  
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['*']
 
 DATABASES = { 
     "default": { 

@@ -7,31 +7,33 @@ class RegisterSerializer(serializers.ModelSerializer) :
 
     email = serializers.EmailField(
         required=True,
-        validator = [validators.UniqueValidator(queryset=User.objects.all())] #Unique validatoru hazir kullanicilar icinde kiyaslattiriyorum. 
+        validators = [validators.UniqueValidator(queryset=User.objects.all())] #Unique validatoru hazir kullanicilar icinde kiyaslattiriyorum. 
         )
 
 
     password = serializers.CharField(
         required=True, 
         write_only=True, #write_only=True yapmamin sebebi yazmak zorunlu olsun ama gözükmesin.
-        validator = [validate_password]  
+        validators = [validate_password]  
         ) 
 
 
     password2 = serializers.CharField(
         required=True,
         write_only=True,
-        validator = [validate_password]   
+        validators = [validate_password]   
          )
 
 
     class Meta :
         model = User
-        exclude = []
+        exclude = [
+            
+        ]
 
     #override yapiyorum
     def validate (self,attrs) :
-        if attrs['password'] == attrs['password2'] :
+        if attrs['password'] != attrs['password2'] :
             raise serializers.ValidationError({"message":"Passwords are not same!"})
         return attrs
 #Bu fonksiyona gelmeden önce yukardaki bilgiler dogrulanmis olacak. 
@@ -39,3 +41,17 @@ class RegisterSerializer(serializers.ModelSerializer) :
         password = validated_data.get('password')
         validated_data.pop('password2') ##Onaylandiktan sonra artik password2 yi silebilirim. DB'ye kaydedilmesine gerek yok
         user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
+
+#------------------------Customization TokenSerialiezr---------------
+
+from dj_rest_auth.serializers import TokenSerializer
+
+class CustomTokenSerializer(TokenSerializer) :
+    user = RegisterSerializer(read_only = True)
+    
+    class Meta(TokenSerializer.Meta) : 
+        fields = ["key", "user"]

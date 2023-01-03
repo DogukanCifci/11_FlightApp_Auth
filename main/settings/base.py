@@ -155,3 +155,7 @@ REST_FRAMEWORK = {
     # Allow post-request without CSRF, so can connection with Token from external service, like Postman:
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication']
 }
+
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'users.serializers.TokenSerializer',
+}
