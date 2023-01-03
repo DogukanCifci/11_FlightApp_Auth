@@ -16,16 +16,12 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
-
-
-
-ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -37,7 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework.authtoken', # python manage.py migrate
     # Third party apps: 
     'drf_yasg',
     'dj_rest_auth',
@@ -75,14 +71,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'main.wsgi.application'
 
 
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
-
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -112,12 +100,17 @@ LOGGING = {
     "disable_existing_loggers": True, 
     # Formatters describe the exact format of that text of a log record.  
     "formatters": { 
-        "standard": { "format": "[%(levelname)s] %(asctime)s %(name)s: %(message)s"}, 
+        "standard": {
+            "format": "[%(levelname)s] %(asctime)s %(name)s: %(message)s"
+        }, 
         'verbose': { 
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}', 
-            'style': '{', }, 
-        'simple': { 
-            'format': '{levelname} {message}', 'style': '{',}, 
+            'style': '{',
+        }, 
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        }, 
     }, 
     # The handler is the engine that determines what happens to each message in a logger. 
     # It describes a particular logging behavior, such as writing a message to the screen,  
@@ -141,7 +134,7 @@ LOGGING = {
         "django": { 
             "handlers": ["console", 'file'], 
             # log level describes the severity of the messages that the logger will handle.  
-            "level": config("DJANGO_LOG_LEVEL", "INFO"), 
+            "level": config("DJANGO_LOG_LEVEL", "WARNING"), 
             'propagate': True, 
             # If False, this means that log messages written to django.request  
             # will not be handled by the django logger. 
@@ -149,13 +142,11 @@ LOGGING = {
     }, 
 }
 
-
-#My Installed;
 REST_FRAMEWORK = {
     # Allow post-request without CSRF, so can connection with Token from external service, like Postman:
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication']
 }
 
 REST_AUTH_SERIALIZERS = {
-    'TOKEN_SERIALIZER': 'users.serializers.TokenSerializer',
+    'TOKEN_SERIALIZER': 'users.serializers.CustomTokenSerializer',
 }

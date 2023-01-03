@@ -1,18 +1,12 @@
 from .base import * 
- 
-ALLOWED_HOSTS = ['*']
 
-DATABASES = { 
-    "default": { 
-        "ENGINE": "django.db.backends.postgresql_psycopg2", 
-        "NAME": config("SQL_DATABASE"), 
-        "USER": config("SQL_USER"), 
-        "PASSWORD": config("SQL_PASSWORD"), 
-        "HOST": config("SQL_HOST"), 
-        "PORT": config("SQL_PORT"), 
-        "ATOMIC_REQUESTS": True, 
-    }
-}
+ALLOWED_HOSTS = ["127.0.0.1"]
+ 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config("DEBUG") 
+
+# Password validation
+# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -28,3 +22,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+ 
+DATABASES = { 
+    "default": { 
+        "ENGINE": "django.db.backends.postgresql_psycopg2", 
+        "NAME": config("SQL_DATABASE"), 
+        "USER": config("SQL_USER"), 
+        "PASSWORD": config("SQL_PASSWORD"), 
+        "HOST": config("SQL_HOST"), 
+        "PORT": config("SQL_PORT"), 
+        "ATOMIC_REQUESTS": True, 
+    }
+}

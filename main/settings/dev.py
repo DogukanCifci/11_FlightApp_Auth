@@ -1,6 +1,11 @@
 from .base import *
 
+ALLOWED_HOSTS = ["*"]
 
+# Password validation
+# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = []
  
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG") 
@@ -24,5 +29,3 @@ INTERNAL_IPS = [
     "127.0.0.1", 
 ]
 
-
-AUTH_PASSWORD_VALIDATORS = []
