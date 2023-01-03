@@ -30,4 +30,4 @@ class Passenger(models.Model):
 class Reservation(models.Model) :
     user = models.ForeignKey(User, on_delete=models.CASCADE) #User silindiginde o user'a ait reservationlar da silinsin anlamina gelir.
     passenger = models.ManyToManyField(Passenger, related_name='reservations')
-    flight = models.ForeignKey(Flight, on_delete=models.CASCADE) #Ucus silindiginde Reservationslar'da silinsin.
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name="reservation") #Ucus silindiginde Reservationslar'da silinsin.
